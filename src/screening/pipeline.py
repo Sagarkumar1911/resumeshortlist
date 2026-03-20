@@ -66,7 +66,7 @@ def screen_resumes_batch(
     if not uploaded_files:
         return pd.DataFrame()
 
-    # Cap prompt sizes to reduce latency and token usage.
+    
     max_job_desc_chars = int(os.getenv("RESUME_SCREENING_MAX_JOB_DESC_CHARS", "4000"))
     max_resume_chars = int(os.getenv("RESUME_SCREENING_MAX_RESUME_CHARS", "25000"))
     max_pdf_pages = int(os.getenv("RESUME_SCREENING_MAX_PDF_PAGES", "8"))
@@ -76,7 +76,7 @@ def screen_resumes_batch(
 
     job_description = normalize_text(job_description)[:max_job_desc_chars]
 
-    # Extraction is typically CPU-bound (PDF parsing), so keep it sequential.
+    
     rows: list[dict | None] = [None] * len(uploaded_files)
     pending: list[tuple[int, str, str]] = []  # (index, file_name, resume_text)
 
@@ -100,7 +100,7 @@ def screen_resumes_batch(
             )
             continue
 
-        # Absolute safety cap (normalization can slightly change length).
+        
         if len(resume_text) > max_resume_chars:
             resume_text = resume_text[:max_resume_chars]
 
@@ -121,7 +121,7 @@ def screen_resumes_batch(
 
         parsed = parse_json_safely(raw_text)
         if parsed is None:
-            # Last attempt: sometimes the SDK returns already structured content; try a direct load as JSON.
+            
             try:
                 parsed = json.loads(raw_text)
             except Exception:

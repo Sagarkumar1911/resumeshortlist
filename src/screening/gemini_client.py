@@ -7,9 +7,9 @@ _config_lock = threading.Lock()
 _configured_api_key: Optional[str] = None
 
 try:
-    # Some SDK versions expose a typed GenerationConfig class.
-    from google.generativeai.types import GenerationConfig as _GenerationConfig  # type: ignore
-except Exception:  # pragma: no cover
+    
+    from google.generativeai.types import GenerationConfig as _GenerationConfig  
+except Exception:  
     _GenerationConfig = None
 
 
@@ -56,7 +56,7 @@ def generate_gemini_text(
     try:
         response = model.generate_content(prompt, **kwargs)
     except TypeError:
-        # Fallback for SDK variations that don't accept certain config types.
+        
         response = model.generate_content(prompt, generation_config=generation_config)
     return (response.text or "").strip()
 
@@ -65,7 +65,7 @@ def analyze_resume_with_gemini(
     job_description: str,
     resume_text: str,
     api_key: str,
-    model_name: str = "gemini-1.5-flash", # or gemini-2.5-flash
+    model_name: str = "gemini-1.5-flash", 
     temperature: float = 0.0
 ) -> Dict[str, Any]:
     """

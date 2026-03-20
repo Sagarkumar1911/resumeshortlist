@@ -7,7 +7,7 @@ from docx import Document
 
 
 def _read_bytes(file_obj: BinaryIO) -> bytes:
-    # Works for Streamlit's UploadedFile as well as standard file objects.
+    
     if hasattr(file_obj, "getvalue"):
         return file_obj.getvalue()
     return file_obj.read()
