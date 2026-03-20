@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional
 import pandas as pd
 
 from src.ai.gemini_client import analyze_resume_with_gemini
-from src.extractors.extract_text import extract_text_from_upload
+from src.screening.extractors import extract_text_from_upload
 
 
 def _results_to_row(file_name: str, payload: Dict[str, Any]) -> Dict[str, Any]:
